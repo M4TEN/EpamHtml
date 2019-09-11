@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link href="main.css" rel="stylesheet">
+</head>
+<body>
+  <p class='rows'>Rows:</p>
+  <label><input type="number" class="input-x" id="rows"  value="2" style="font-family: Сomic sans ms; font-size: 12px; margin-left: 15px; width: 50px;"></label>
+  <p class='columns'>Columns:</p>
+  <label><input type="number" class="input-y" id="columns" value="3" style="font-family: Сomic sans ms; font-size: 12px; margin-left: 15px; width: 50px;"></label>
+
+
+
+  <button id="create" class = "btn" style="background-color: grey; margin: 5px 15px">Create table</button>
+  <script>
+    let btn = document.querySelector(".btn");
+    btn.addEventListener("click",addTable);
+    function addTable(){
+                createTable();
+                color();
+        }
+    
+    function createTable() {
+      var body = document.querySelector("body"),
+          width = 100,
+          height = 100,
+          numRows = document.getElementById("rows"),
+          numColumns = document.getElementById("columns"),
+          rows = numRows.value,
+          columns = numColumns.value,
+          tr = "",
+          td = "",
+          firstTable = document.querySelector("table");
+      table = document.createElement("table"),
+      table.setAttribute("width", width);
+      table.setAttribute("height", height);
+      for (var i = 0; i < rows; i++) {
+        tr = document.createElement("tr");
+        for (var j = 0; j < columns; j++) {
+          td = document.createElement("td");
+          text = document.createTextNode((i + 1) + "." + (j + 1));
+          td.appendChild(text);
+          tr.appendChild(td);
+        }
+        table.appendChild(tr);
+      }
+      if (firstTable == null) {
+        return body.appendChild(table);
+      } else {
+        var newTable = body.appendChild(table);
+        return document.body.replaceChild(newTable, firstTable);
+      }
+    }
+
+
+
+
+
+
+    function color(){
+        var tbls = document.querySelector('table');
+        console.log(tbls);
+            tbls.addEventListener("click", function l(event) {
+                var el = event.target || event.srcElement;
+                if (el.parentNode.rowIndex !== undefined) {
+                    if (el.offsetParent.rows[el.parentNode.rowIndex].cells[el.cellIndex].className === "colorclick") {
+                        for (var i = el.cellIndex; i >= 0; i--) {
+                            el.offsetParent.rows[el.parentNode.rowIndex].cells[el.cellIndex].className = "";
+                        }
+                    } else {
+                        for (var i = el.cellIndex; i >= 0; i--) {
+                            el.offsetParent.rows[el.parentNode.rowIndex].cells[el.cellIndex].className = "colorclick";
+                        }
+                    }
+                }
+
+            });
+        }
+
+
+</script>
+</body>
+</html>
